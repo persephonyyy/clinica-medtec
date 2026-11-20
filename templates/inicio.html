@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Painel da clínica</h1>
+
+<div class="cards">
+    <a class="card" href="{{ url_for('listar_pacientes') }}">
+        <span class="numero">{{ total_pacientes }}</span>
+        <span>Pacientes cadastrados</span>
+    </a>
+    <a class="card" href="{{ url_for('listar_consultas') }}">
+        <span class="numero">{{ total_consultas }}</span>
+        <span>Consultas agendadas</span>
+    </a>
+</div>
+
+<h2>Próximas consultas</h2>
+<div class="tabela">
+    <table>
+        <tr><th>Data</th><th>Hora</th><th>Paciente</th></tr>
+        {% for c in proximas %}
+        <tr>
+            <td>{{ c.data }}</td>
+            <td>{{ c.hora }}</td>
+            <td>{{ c.paciente_nome }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">Nenhuma consulta futura agendada.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

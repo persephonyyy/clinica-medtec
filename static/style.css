@@ -194,4 +194,56 @@ button.perigo {
     [data-tema="escuro"] .btn {
     color: white;
     }
+    .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+    }
+
+    .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid var(--cor-principal);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .card .numero {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: var(--cor-escura);
+    }
+
+    main {
+    animation: aparecer 0.4s ease;
+    }
+
+    @keyframes aparecer {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+    }
+
+    button, .btn, nav a, tr td {
+    transition: background 0.2s, transform 0.1s;
+    }
+
+    button:active, .btn:active {
+    transform: scale(0.96);
+    }
+
+    [data-tema="escuro"] .card .numero {
+    color: #7fd1de;
+    }
 }

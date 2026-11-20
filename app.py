@@ -5,24 +5,26 @@ from algoritmos import ordenar_por_nome, buscar_por_nome
 app = Flask(__name__)
 criar_tabelas()  
 
-
 @app.route("/")
 def inicio():
-    return redirect(url_for("listar_pacientes"))
-
-@app.route("/pacientes")
-def listar_pacientes():
-    busca = request.args.get("busca", "")
-
     conexao = conectar()
-    pacientes = conexao.execute("SELECT * FROM pacientes").fetchall()
+    total_pacientes = conexao.execute("SELECT COUNT(*) FROM pacientes").fetchone()[0]
+    total_consultas = conexao.execute("SELECT COUNT(*) FROM consultas").fetchone()[0]
+    proximas = conexao.execute("""
+        SELECT consultas.data, consultas.hora, pacientes.nome AS paciente_nome
+        FROM consultas
+        JOIN pacientes ON consultas.paciente_id = pacientes.id
+        WHERE consultas.data >= date('now')
+        ORDER BY consultas.data, consultas.hora
+        LIMIT 5
+    """).fetchall()
     conexao.close()
-
-    if busca:
-        pacientes = buscar_por_nome(pacientes, busca)  
-    pacientes = ordenar_por_nome(pacientes)          
-
-    return render_template("pacientes.html", pacientes=pacientes, busca=busca)
+    return render_template(
+        "inicio.html",
+        total_pacientes=total_pacientes,
+        total_consultas=total_consultas,
+        proximas=proximas,
+    )
 
 
 @app.route("/pacientes/novo", methods=["GET", "POST"])
