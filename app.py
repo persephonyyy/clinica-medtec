@@ -3,7 +3,8 @@ from database import conectar, criar_tabelas
 from algoritmos import ordenar_por_nome, buscar_por_nome
 
 app = Flask(__name__)
-criar_tabelas()  
+criar_tabelas()
+
 
 @app.route("/")
 def inicio():
@@ -25,6 +26,21 @@ def inicio():
         total_consultas=total_consultas,
         proximas=proximas,
     )
+
+
+@app.route("/pacientes")
+def listar_pacientes():
+    busca = request.args.get("busca", "")
+
+    conexao = conectar()
+    pacientes = conexao.execute("SELECT * FROM pacientes").fetchall()
+    conexao.close()
+
+    if busca:
+        pacientes = buscar_por_nome(pacientes, busca)
+    pacientes = ordenar_por_nome(pacientes)
+
+    return render_template("pacientes.html", pacientes=pacientes, busca=busca)
 
 
 @app.route("/pacientes/novo", methods=["GET", "POST"])
@@ -79,9 +95,10 @@ def excluir_paciente(id):
     conexao.close()
     return redirect(url_for("listar_pacientes"))
 
+
 @app.route("/consultas")
 def listar_consultas():
-    data_filtro = request.args.get("data", "") 
+    data_filtro = request.args.get("data", "")
 
     sql = """
         SELECT consultas.id, consultas.data, consultas.hora, consultas.motivo,
@@ -158,6 +175,7 @@ def excluir_consulta(id):
     conexao.commit()
     conexao.close()
     return redirect(url_for("listar_consultas"))
+
 
 @app.route("/api/pacientes")
 def api_pacientes():

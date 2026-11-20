@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-<h1>Painel da clínica</h1>
+<section class="banner">
+    <h1>Bem-vindo(a) à Clínica Recuperamos</h1>
+    <p>Organize pacientes e consultas em um só lugar.</p>
+    <a class="btn" href="{{ url_for('novo_paciente') }}">+ Novo paciente</a>
+    <a class="btn" href="{{ url_for('nova_consulta') }}">+ Nova consulta</a>
+</section>
 
 <div class="cards">
     <a class="card" href="{{ url_for('listar_pacientes') }}">
