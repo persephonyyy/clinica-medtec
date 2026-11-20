@@ -6,12 +6,32 @@
     <title>Clínica Recuperamos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<script>
+    const botao = document.getElementById("botao-tema");
+
+    function aplicarTema(tema) {
+        document.documentElement.setAttribute("data-tema", tema);
+        botao.textContent = tema === "escuro" ? "☀️ Claro" : "🌙 Escuro";
+    }
+
+    let temaSalvo = "claro";
+    try { temaSalvo = localStorage.getItem("tema") || "claro"; } catch (e) {}
+    aplicarTema(temaSalvo);
+
+    botao.addEventListener("click", function () {
+        const atual = document.documentElement.getAttribute("data-tema");
+        const novo = atual === "escuro" ? "claro" : "escuro";
+        aplicarTema(novo);
+        try { localStorage.setItem("tema", novo); } catch (e) {}
+    });
+</script>
 <body>
     <header>
         <h2>Clínica Recuperamos</h2>
         <nav>
             <a href="{{ url_for('listar_pacientes') }}">Pacientes</a>
             <a href="{{ url_for('listar_consultas') }}">Consultas</a>
+            <button id="botao-tema" type="button">🌙 Escuro</button>
         </nav>
     </header>
 

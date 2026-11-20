@@ -121,7 +121,6 @@ button.perigo {
     margin-right: 6px;
 }
 
-/* ===== Celular ===== */
 @media (max-width: 600px) {
     header {
         flex-direction: column;
@@ -147,5 +146,52 @@ button.perigo {
     padding: 16px;
     color: #555;
     font-size: 0.85rem;
-}
+    }
+    #botao-tema {
+    margin-left: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-tema="escuro"] body {
+    background: #121a1c;
+    color: #e6eef0;
+    }
+
+    [data-tema="escuro"] h1 {
+    color: #7fd1de;
+    }
+
+    [data-tema="escuro"] .tabela,
+    [data-tema="escuro"] .card {
+    background: #1c2a2d;
+    }
+
+    [data-tema="escuro"] th,
+    [data-tema="escuro"] td {
+    border-bottom-color: #33474b;
+    }
+
+    [data-tema="escuro"] tr:hover td {
+    background: #263a3e;
+    }
+
+    [data-tema="escuro"] input,
+    [data-tema="escuro"] select {
+    background: #1c2a2d;
+    color: #e6eef0;
+    border-color: #4a6368;
+    }
+
+    [data-tema="escuro"] footer {
+    color: #9ab;
+    }
+
+    [data-tema="escuro"] a {
+    color: #7fd1de;
+    }
+
+    [data-tema="escuro"] nav a,
+    [data-tema="escuro"] .btn {
+    color: white;
+    }
 }
