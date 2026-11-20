@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Pacientes</h1>
+<a class="btn" href="{{ url_for('novo_paciente') }}">+ Novo paciente</a>
+
+<form method="get" class="filtro" style="margin: 12px 0;">
+    <input type="text" name="busca" placeholder="Buscar paciente pelo nome" value="{{ busca }}">
+    <button type="submit">Buscar</button>
+    <a href="{{ url_for('listar_pacientes') }}">Limpar</a>
+</form>
+
+<div class="tabela">
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Nascimento</th>
+            <th>Ações</th>
+        </tr>
+        {% for p in pacientes %}
+        <tr>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.telefone }}</td>
+            <td>{{ p.data_nascimento }}</td>
+            <td class="acoes">
+                <a href="{{ url_for('editar_paciente', id=p.id) }}">Editar</a>
+                <form action="{{ url_for('excluir_paciente', id=p.id) }}" method="post"
+                      style="display:inline" onsubmit="return confirm('Excluir este paciente?');">
+                    <button type="submit" class="perigo">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">Nenhum paciente encontrado.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

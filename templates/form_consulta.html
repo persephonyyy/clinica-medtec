@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>{{ "Editar consulta" if consulta else "Nova consulta" }}</h1>
+
+{% if not pacientes %}
+    <p>Cadastre um paciente antes de marcar uma consulta.</p>
+    <a href="{{ url_for('novo_paciente') }}">Cadastrar paciente</a>
+{% else %}
+<form method="post">
+    <p>
+        <label>Paciente:</label><br>
+        <select name="paciente_id" required>
+            {% for p in pacientes %}
+            <option value="{{ p.id }}"
+                {% if consulta and consulta.paciente_id == p.id %}selected{% endif %}>
+                {{ p.nome }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label>Data:</label><br>
+        <input type="date" name="data" required
+               value="{{ consulta.data if consulta else '' }}">
+    </p>
+    <p>
+        <label>Hora:</label><br>
+        <input type="time" name="hora" required
+               value="{{ consulta.hora if consulta else '' }}">
+    </p>
+    <p>
+        <label>Motivo:</label><br>
+        <input type="text" name="motivo"
+               value="{{ consulta.motivo if consulta else '' }}">
+    </p>
+    <button type="submit">Salvar</button>
+    <a href="{{ url_for('listar_consultas') }}">Cancelar</a>
+</form>
+{% endif %}
+{% endblock %}

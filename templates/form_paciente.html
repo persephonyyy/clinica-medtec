@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>{{ "Editar paciente" if paciente else "Novo paciente" }}</h1>
+
+<form method="post">
+    <p>
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required
+               value="{{ paciente.nome if paciente else '' }}">
+    </p>
+    <p>
+        <label>Telefone:</label><br>
+        <input type="text" name="telefone"
+               value="{{ paciente.telefone if paciente else '' }}">
+    </p>
+    <p>
+        <label>Data de nascimento:</label><br>
+        <input type="date" name="data_nascimento"
+               value="{{ paciente.data_nascimento if paciente else '' }}">
+    </p>
+    <button type="submit">Salvar</button>
+    <a href="{{ url_for('listar_pacientes') }}">Cancelar</a>
+</form>
+{% endblock %}
